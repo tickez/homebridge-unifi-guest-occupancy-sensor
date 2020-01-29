@@ -1,0 +1,14 @@
+"accessories": [
+  {
+    "name": "Guests are Present",
+    "unifi": {
+      "controller": "https://unifi-controller:8443",
+      "username": "superadmin",
+      "password": "password",
+      "site": "default",
+      "secure": false
+    },
+    "interval": 180,
+    "accessory": "UniFi Guest Occupancy Sensor"
+  }
+]

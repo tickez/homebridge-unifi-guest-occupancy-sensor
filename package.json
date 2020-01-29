@@ -1,0 +1,23 @@
+{
+  "name": "homebridge-unifi-guest-occupancy-sensor",
+  "version": "1.0.0",
+  "description": "An occupancy sensor for Homebridge and UniFi to monitor Guest presence",
+  "main": "index.js",
+  "dependencies": {
+    "unifi-events": "^0.4.3",
+    "debug": "^4.1.1"
+  },
+  "keywords": [
+    "homebridge-plugin"
+  ],
+  "engines": {
+    "homebridge": ">=0.2.5"
+  },
+  "author": "tickez <tickez@madnet.ch>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tickez/homebridge-unifi-guest-occupancy-sensor.git"
+  },
+  "devDependencies": {}
+}
