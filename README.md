@@ -1,5 +1,7 @@
 # Unifi Guests Presence Sensor
 
+![npm](https://img.shields.io/npm/dt/homebridge-unifi-guest-occupancy-sensor) ![npm](https://img.shields.io/npm/v/homebridge-unifi-guest-occupancy-sensor)
+
 This simple homebridge plugin emulates a presence sensor which marks presence when a client is connected to a Unifi guest network
 
 ```javascript
