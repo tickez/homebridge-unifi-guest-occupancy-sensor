@@ -4,6 +4,7 @@
 
 This simple homebridge plugin emulates a presence sensor which marks presence when a client is connected to a Unifi guest network
 
+Standalone Unifi Controller
 ```javascript
 "accessories": [
   {
@@ -13,12 +14,30 @@ This simple homebridge plugin emulates a presence sensor which marks presence wh
       "username": "superadmin",
       "password": "password",
       "site": "default",
-      "secure": false
+      "secure": false,
+      "unifios": false
     },
     "interval": 180,  // polling interval in case websocket connection is lost
     "accessory": "UniFi Guest Occupancy Sensor"
   }
 ]
 ```
-
+For UnifiOS based device (UDM, KC, etc.), use port 443 (default) and set unifios to "true".
+```javascript
+"accessories": [
+  {
+    "name": "Guests are Present",
+    "unifi": {
+      "controller": "https://unifi-controller",
+      "username": "superadmin",
+      "password": "password",
+      "site": "default",
+      "secure": false,
+      "unifios": true
+    },
+    "interval": 180,  // polling interval in case websocket connection is lost
+    "accessory": "UniFi Guest Occupancy Sensor"
+  }
+]
+```
 
