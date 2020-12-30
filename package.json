@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "debug": "^4.1.1",
-    "ubnt-unifi": "git+https://github.com/muxa/ubnt-unifi.git"
+    "ubnt-unifi": "muxa/ubnt-unifi"
   },
   "keywords": [
     "homebridge-plugin"
