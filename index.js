@@ -1,6 +1,7 @@
 'use strict';
 
-const UnifiEvents = require('unifi-events');
+const UnifiEvents = require('ubnt-unifi');
+const url = require("url");
 
 let Service, Characteristic;
 
@@ -18,39 +19,53 @@ class OccupancySensor {
     this.guestNetworks = config.guestNetworks || [];
     this.interval = config.interval || 180;
 
+    this.controller=url.parse(config.unifi.controller);
+
+    log(`${this.controller.hostname}, ${this.controller.port}`);
+
     this.unifi = new UnifiEvents({
-      controller: config.unifi.controller,
+      host: this.controller.hostname,
+      port: this.controller.port || 443,
       username: config.unifi.username,
       password: config.unifi.password,
       site: config.unifi.site || 'default',
-      rejectUnauthorized: config.unifi.secure || false,
-      listen: true
+      insecure: !config.unifi.secure || true,
+      unifios: config.unifi.unifios || false
     });
 
-    this.unifi.on('connected', (data) => {
+    this.unifi.on('ctrl.connect', (data) => {
       return this.checkOccupancy()
     });
 
-    this.unifi.on('disconnected', (data) => {
+    this.unifi.on('ctrl.reconnect', (data) => {
+      return this.checkOccupancy()
+    });
+
+    this.unifi.on('*.connected', (data) => {
+      return this.checkOccupancy()
+    });
+
+    this.unifi.on('*.disconnected', (data) => {
       return this.checkOccupancy()
     });
 
     this.occupancyDetected = Characteristic.OccupancyDetected.OCCUPANCY_NOT_DETECTED;
-    this.checkOccupancy();
     setInterval(this.checkOccupancy.bind(this), this.interval * 1000)
   }
 
   checkOccupancy() {
     const guestIsPresent = (device) => device.is_guest === true;
-    this.unifi.getClients().then((res) => {
+    this.unifi.get('stat/sta').then((res) => {
       if (res.data.some(guestIsPresent)) {
+        // this.log("Guests are present");
         this.setOccupancyDetected(true);
       } else {
+        // this.log("No guests are present");
         this.setOccupancyDetected(false);
       }
     })
     .catch((err) => {
-      this.log(`ERROR: Failed to check occupancy: ${err.message}`)
+      this.log(`ERROR: Failed to check occupancy: ${err}`)
     });
   }
 

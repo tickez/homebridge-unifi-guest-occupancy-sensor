@@ -4,8 +4,8 @@
   "description": "An occupancy sensor for Homebridge and UniFi to monitor Guest presence",
   "main": "index.js",
   "dependencies": {
-    "unifi-events": "^0.4.3",
-    "debug": "^4.1.1"
+    "debug": "^4.1.1",
+    "ubnt-unifi": "git+https://github.com/muxa/ubnt-unifi.git"
   },
   "keywords": [
     "homebridge-plugin"

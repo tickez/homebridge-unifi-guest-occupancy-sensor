@@ -2,12 +2,12 @@
   {
     "name": "Guests are Present",
     "unifi": {
-      "controller": "https://unifi-controller:8443",
+      "controller": "https://unifi-controller",
       "username": "superadmin",
       "password": "password",
       "site": "default",
       "secure": false,
-      "unifios": false
+      "unifios": true
     },
     "interval": 180,
     "accessory": "UniFi Guest Occupancy Sensor"
