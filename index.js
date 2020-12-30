@@ -57,10 +57,10 @@ class OccupancySensor {
     const guestIsPresent = (device) => device.is_guest === true;
     this.unifi.get('stat/sta').then((res) => {
       if (res.data.some(guestIsPresent)) {
-        // this.log("Guests are present");
+        this.log("Guests are present");
         this.setOccupancyDetected(true);
       } else {
-        // this.log("No guests are present");
+        this.log("No guests are present");
         this.setOccupancyDetected(false);
       }
     })
