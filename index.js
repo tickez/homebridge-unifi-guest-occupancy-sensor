@@ -1,6 +1,6 @@
 'use strict';
 
-const UnifiEvents = require('ubnt-unifi');
+const UnifiEvents = require('unifi-events');
 const url = require("url");
 
 let Service, Characteristic;
