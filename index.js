@@ -1,6 +1,7 @@
 'use strict';
 
 const UnifiEvents = require('unifi-events');
+const manifest = require('./package.json');
 const url = require("url");
 
 let Service, Characteristic;
@@ -33,14 +34,6 @@ class OccupancySensor {
       unifios: config.unifi.unifios || false
     });
 
-    this.unifi.on('ctrl.connect', (data) => {
-      return this.checkOccupancy()
-    });
-
-    this.unifi.on('ctrl.reconnect', (data) => {
-      return this.checkOccupancy()
-    });
-
     this.unifi.on('*.connected', (data) => {
       return this.checkOccupancy()
     });
@@ -50,6 +43,7 @@ class OccupancySensor {
     });
 
     this.occupancyDetected = Characteristic.OccupancyDetected.OCCUPANCY_NOT_DETECTED;
+    this.checkOccupancy();
     setInterval(this.checkOccupancy.bind(this), this.interval * 1000)
   }
 
@@ -58,11 +52,12 @@ class OccupancySensor {
     this.unifi.get('stat/sta').then((res) => {
       if (res.data.some(guestIsPresent)) {
         this.log("Guests are present");
-        this.setOccupancyDetected(true);
+        this.occupancyDetected = Characteristic.OccupancyDetected.OCCUPANCY_DETECTED;
       } else {
         this.log("No guests are present");
-        this.setOccupancyDetected(false);
+        this.occupancyDetected = Characteristic.OccupancyDetected.OCCUPANCY_NOT_DETECTED;
       }
+      this.setOccupancyDetected(this.occupancyDetected);
     })
     .catch((err) => {
       this.log(`ERROR: Failed to check occupancy: ${err}`)
@@ -70,7 +65,7 @@ class OccupancySensor {
   }
 
   getOccupancyDetected(callback) {
-    return callback(null, this.checkOccupancy())
+    return callback(null, this.occupancyDetected)
   }
 
   setOccupancyDetected(value) {
@@ -81,6 +76,7 @@ class OccupancySensor {
     var informationService = new Service.AccessoryInformation()
     .setCharacteristic(Characteristic.Manufacturer, 'Unifi')
     .setCharacteristic(Characteristic.Model, 'unifi-guest-occupancy')
+    .setCharacteristic(Characteristic.SerialNumber, manifest.version);
 
     this.occupancyService
     .getCharacteristic(Characteristic.OccupancyDetected)
