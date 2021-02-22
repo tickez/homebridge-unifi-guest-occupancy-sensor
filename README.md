@@ -18,7 +18,10 @@ Standalone Unifi Controller
       "unifios": false
     },
     "interval": 180,  // polling interval in case websocket connection is lost
-    "accessory": "UniFi Guest Occupancy Sensor"
+    "accessory": "UniFi Guest Occupancy Sensor",
+    "exclude": [
+      "01:23:45:67:89:ab"
+    ]
   }
 ]
 ```
@@ -36,7 +39,10 @@ For UnifiOS based device (UDM, KC, etc.), use port 443 (default) and set unifios
       "unifios": true
     },
     "interval": 180,  // polling interval in case websocket connection is lost
-    "accessory": "UniFi Guest Occupancy Sensor"
+    "accessory": "UniFi Guest Occupancy Sensor",
+    "exclude": [
+      "01:23:45:67:89:ab"
+    ]
   }
 ]
 ```
