@@ -10,6 +10,9 @@
       "unifios": false
     },
     "interval": 180,
-    "accessory": "UniFi Guest Occupancy Sensor"
+    "accessory": "UniFi Guest Occupancy Sensor",
+    "exclude": [
+      "01:23:45:67:89:ab"
+    ]
   }
 ]

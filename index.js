@@ -19,6 +19,7 @@ class OccupancySensor {
     this.occupancyService = new Service.OccupancySensor(this.name);
     this.guestNetworks = config.guestNetworks || [];
     this.interval = config.interval || 180;
+    this.exclude = config.exclude || [];
 
     this.controller=url.parse(config.unifi.controller);
 
@@ -48,7 +49,7 @@ class OccupancySensor {
   }
 
   checkOccupancy() {
-    const guestIsPresent = (device) => device.is_guest === true;
+    const guestIsPresent = (device) => device.is_guest === true && !this.exclude.includes(device.mac);
     this.unifi.get('stat/sta').then((res) => {
       if (res.data.some(guestIsPresent)) {
         this.log("Guests are present");
