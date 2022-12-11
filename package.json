@@ -1,10 +1,10 @@
 {
   "name": "homebridge-unifi-guest-occupancy-sensor",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "An occupancy sensor for Homebridge and UniFi to monitor Guest presence",
   "main": "index.js",
   "dependencies": {
-    "debug": "^4.1.1",
+    "debug": "^4.3.4",
     "unifi-events": "2.0.0"
   },
   "keywords": [
